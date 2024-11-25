@@ -10,9 +10,8 @@ const backgroundMaterial = new THREE.MeshBasicMaterial({
 const backgroundPlane = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
 backgroundPlane.position.z = -500;
 scene.add(backgroundPlane);
-const backgroundMusic = new Audio('background.mp3');
-backgroundMusic.loop = true;
-const gameOverSound = new Audio('gameover.mp3');
+const backgroundMusic = document.getElementById('background');
+const gameOverSound = document.getElementById('gameOver');
 const lineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 const lines = [];
 for (let z = -500; z < 0; z += 5) {
@@ -331,7 +330,15 @@ function applyMute(state) {
 document.getElementById('start-button').addEventListener('click', function () {
   backgroundMusic.play();
   document.getElementById('start-game').style.display = 'none';
+  document.getElementById('help').style.display = 'none';
+
   document.getElementById('play').style.display = 'block';
   newColor();
   animate();
+});
+document.getElementById('help').addEventListener('click', function () {
+  document.getElementById('content').style.display = 'block';
+});
+document.getElementById('close').addEventListener('click', function () {
+  document.getElementById('content').style.display = 'none';
 });

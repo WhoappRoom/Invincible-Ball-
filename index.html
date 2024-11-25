@@ -12,6 +12,7 @@
       margin: 0;
       user-select: none;
       overflow: hidden;
+      font-size: 18px;
       background-color: rgba(0,0,0.8);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
@@ -47,7 +48,7 @@
       justify-content: space-between;
       align-items: center;
     }
-    #play, #sound{
+    #play, #help, #close, #sound{
       color: white;
       align-items: center;
       justify-content: center;
@@ -76,6 +77,10 @@
       box-shadow: 0 0 20px rgba(0,0,0,0.2);
       font-family: Arial, sans-serif;
     }
+    #start-game button, #restart{
+      margin-top: 250px;
+      padding: 20px 30px;
+    }
     #start-game h1 {
       font-size: 2em;
       margin-bottom: 20px;
@@ -84,7 +89,7 @@
       font-size: 1.2em;
       margin-bottom: 20px;
     }
-    #sound{
+    #sound, #close, #help{
       display: flex;
     }
     #play{
@@ -97,14 +102,41 @@
       font-size: 50px;
       left: 50%;
     }
+    .content {
+      max-width: 600px;
+      margin: 0 auto;
+      color: #fff;
+      background-color: #333;
+      padding: 20px;
+      display: none;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      position: fixed;
+      z-index: 3;
+      border-radius: 8px;
+    }
+    .content p {
+      line-height: 1.6;
+    }
+    .content ul {
+      margin-top: 10px;
+    }
+    .content li {
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
+  <audio style="display: none" id="gameOver" src="gameover.mp3"></audio>
+  <audio style="display: none" id="background" src="background.mp3" loop></audio>
   <div id="top">
     <div id="score"></div>
     <div style="display: flex; gap: 10px; align-items: center;">
       <button id="play"><i class="bx bx-pause"></i></button>
       <button id="sound"><i class='bx bxs-volume-full'></i></button>
+      <button id="help"><i class='bx bx-help-circle'></i></button>
     </div>
   </div>
   <h1 id="center-score">0</h1>
@@ -120,6 +152,28 @@
     <p id="hight">Score-kaaga Sare waa 0</p>
     <button id="start-button">Bilow</button>
   </div>
+  <div class="content" id="content">
+    <button id="close"><i class="bx bx-x"></i></button>
+    <h1>Sida Loo Ciyaaro "Invincible Ball"</h1>
+    <p>"Invincible Ball" waa ciyaar xiiso leh oo u baahan xirfad iyo degdegsiimo. Ujeedada ciyaarta waa inaad ka fogaataa caqabadaha isla markaana kasbato dhibco badan.</p>
+    <h2>Si Loo Ciyaaro:</h2>
+    <ul>
+      <li><strong>Ujeedada:</strong> Ka fogow caqabadaha adigoo maamulaya kubbaddaada.</li>
+      <li><strong>Maamul:</strong> Isticmaal taabashada shaashadda si aad kubbadda u dhaqadhaqaajiso.</li>
+      <li><strong>Power-Ups:</strong> Waxaa jira awoodo gaar ah ee ku jira ciyaarta sida awood u lahaanshaha in aad kubbadda ka dhigto mid aan la qaban karin ama inaad u dhaqaaqdo si degdeg ah. Isku day inaad hesho kuwaas si ay kugu fududaato ciyaarta.</li>
+      <li><strong>Dhibcaha:</strong> Kasbashada dhibcaha iyadoo ka gudubto caqabadaha. Markaad ka gudubto heerar badan, waxaad kasban doontaa dhibco badan. Ujeedada ugu dambeysa waa inaad gaarto dhibcaha ugu sareeya.</li>
+      </ul>
+      <h2>Tilmaamaha Ciyaarta:</h2>
+      <ul>
+        <li><strong>Hagaaji dhaqaaqitaanka:</strong> Isku day inaad ka fogaato caqabadaha adigoo u dhaqaaqaya si degdeg ah. Haddii aad si tartiib ah ugu dhaqaaqdo, caqabadaha ayaa ku qaadi kara.</li>
+        <li><strong>Ka faa'iidayso power-ups:</strong> Markaad aragto power-up, isticmaal sida ugu dhaqsaha badan si aad u hesho faa'iidooyin dheeraad ah.</li>
+        <li><strong>Hel Dhibco Dheeraad ah:</strong> Waxaad ku kasban kartaa dhibco dheeraad ah adigoo gudbaya heerar kala duwan. Ciyaarta waxay leedahay heerar badan, mid walbana wuxuu ka dhigayaa ciyaarta mid adag.</li>
+        <li><strong>Xirfado:</strong> Haddii aad si fiican uga shaqeyso ciyaarta, waxaad ogaan doontaa inay jiraan xirfado gaar ah oo ka caawinaya in aad ka gudubto caqabadaha si sahlan.</li>
+      </ul>
+      <h2>Ka Faa'iidayso:</h2>
+      <p><strong>Hagaaji Xirfadahaaga:</strong> Xirfadahaaga ciyaarta ayaa hagaagi doona markaad si joogto ah ugu ciyaarto. Isku day inaad ka hortagto caqabadaha adiga oo aad ka fiirsaneyso dhaqdhaqaaqaaga.</p>
+      <p><strong>Nasiib Wanaagsan!</strong> Xusuusnow, "Invincible Ball" waa ciyaar aad u xiiso badan oo ku saabsanaan doonta hawlgal aad u daran. Ka fogow caqabadaha oo kasbato dhibcaha ugu badan!</p>
+    </div>
   <script src="three.min.js"></script>
   <script src="main.js" type="module" defer></script>
 </body>
