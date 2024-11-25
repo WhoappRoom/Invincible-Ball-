@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" href="whoapp.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <title>Invincible Ball game Somali</title>
+  <style>
+    body {
+      margin: 0;
+      user-select: none;
+      overflow: hidden;
+      background-color: rgba(0,0,0.8);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    canvas {
+      display: block;
+    }
+    #game-over {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      flex-direction: column;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    #score {
+      color: #00f532;
+      font-weight: bold;
+    }
+    #top{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      padding: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #play, #sound{
+      color: white;
+      align-items: center;
+      justify-content: center;
+      display: none;
+      background-color: transparent;
+      font-size: 35px;
+    }
+    button{
+      padding: 15px;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      background-color: #434343;
+    }
+    #start-game {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      font-family: Arial, sans-serif;
+    }
+    #start-game h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    #start-game p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    #sound{
+      display: flex;
+    }
+    #play{
+      font-size: 40px;
+    }
+    #center-score{
+      position: fixed;
+      top: 10%;
+      color: #fff;
+      font-size: 50px;
+      left: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div id="top">
+    <div id="score"></div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <button id="play"><i class="bx bx-pause"></i></button>
+      <button id="sound"><i class='bx bxs-volume-full'></i></button>
+    </div>
+  </div>
+  <h1 id="center-score">0</h1>
+  <div id="game-over">
+    <h3>Ciyaartu Way Dhamaatay!</h3>
+    <h1 id="lastScore">0</h1>
+    <h2 id="hight-score">0</h2>
+    <button id="restart">Ku Celi</button>
+  </div>
+  <div id="start-game">
+    <h1>Kusoo Dhowow Invincible ball Soomaali!</h1>
+    <p>Guji Badhanka Bilow Game-ka</p>
+    <p id="hight">Score-kaaga Sare waa 0</p>
+    <button id="start-button">Bilow</button>
+  </div>
+  <script src="three.min.js"></script>
+  <script src="main.js" type="module" defer></script>
+</body>
+</html>
