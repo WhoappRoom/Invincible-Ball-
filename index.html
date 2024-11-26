@@ -36,6 +36,7 @@
     }
     #score {
       color: #00f532;
+      font-size: 20px;
       font-weight: bold;
     }
     #top{
@@ -62,7 +63,10 @@
       border: none;
       cursor: pointer;
       border-radius: 4px;
-      background-color: #434343;
+      background: repeating-linear-gradient( 45deg, #54d440, #54d440 5px, #52cc3f 5px, #52cc3f 10px);
+    box-shadow: 0 6px 0 #348628, 0 8px 1px 1px rgba(0,0,0,.3), 0 10px 0 5px #2a6d20, 0 12px 0 5px #39822e, 0 15px 0 5px #1d4c16, 0 15px 1px 6px rgba(0,0,0,.3);
+    border-bottom: 3px solid rgba(40, 117, 29, 0.5);
+    text-shadow: 2px 2px 1px #348628, -2px 2px 1px #348628, 2px -2px 1px #348628, -2px -2px 1px #348628, 0px 2px 1px #348628, 0px -2px 1px #348628, 0px 4px 1px #1d4c16, 2px 4px 1px #1d4c16, -2px 4px 1px #1d4c16;
     }
     #start-game {
       position: absolute;
@@ -126,13 +130,21 @@
     .content li {
       margin: 5px 0;
     }
+    #diamond{
+      color: #fff;
+      font-size: 50px;
+      font-weight: bolder;
+    }
   </style>
 </head>
 <body>
   <audio style="display: none" id="gameOver" src="gameover.mp3"></audio>
   <audio style="display: none" id="background" src="background.mp3" loop></audio>
   <div id="top">
-    <div id="score"></div>
+    <div style="display: flex; align-items: center;">
+      <div id="score"></div>
+      <div id="diamond">💎0</div>
+    </div>
     <div style="display: flex; gap: 10px; align-items: center;">
       <button id="play"><i class="bx bx-pause"></i></button>
       <button id="sound"><i class='bx bxs-volume-full'></i></button>

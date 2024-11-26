@@ -50,13 +50,11 @@ leftWall.position.set(-10, 0.5, -100);
 rightWall.position.set(10, 0.5, -100);
 scene.add(leftWall, rightWall);
 const obstacles = [];
-function getRandomColor() {
-  return `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`;
-}
 
 function createObstacle(zPosition) {
-  const obstacleGeometry = new THREE.BoxGeometry(1, 1, 1);
-  const obstacleMaterial = new THREE.MeshStandardMaterial({ color: getRandomColor() });
+  const obstacleGeometry = new THREE.BoxGeometry(2, 2, 1);
+  const obstaclesBg = new THREE.TextureLoader().load('bg1.jpeg');
+  const obstacleMaterial = new THREE.MeshStandardMaterial({ map: obstaclesBg, color: 0xf50000 });
   const obstacle = new THREE.Mesh(obstacleGeometry, obstacleMaterial);
   obstacle.position.set((Math.random() - 0.5) * 10, 0.3, zPosition);
   obstacle.velocityX = (Math.random() - 0.5) * 0.1;
@@ -66,37 +64,40 @@ function createObstacle(zPosition) {
 for (let i = -20; i > -100; i -= 5) {
   createObstacle(i);
 }
-    const powerUpGeometry = new THREE.TetrahedronGeometry(0.5);
-    const powerUpMaterial = new THREE.MeshStandardMaterial({ color: 0xffff00 });
-    const powerUp = new THREE.Mesh(powerUpGeometry, powerUpMaterial);
-    resetPowerUpPosition();
-    scene.add(powerUp);
-
-    function resetPowerUpPosition() {
-      powerUp.position.set((Math.random() - 0.5) * 8, 0.5, -50 - Math.random() * 50);
-    }
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(0, 10, 5);
-    scene.add(directionalLight);
-
-    // Camera position
-    camera.position.set(0, 5, 15);
-    camera.lookAt(0, 5, 5);
-
-    // Game Variables
-    let playerVelocityX = 0;
-    let gameSpeed = 0.1;
-    let score = 0;
-    let powerUpActive = false;
-    let powerUpTimer = 0;
-    let isGameOver = false;
-    let isDragging = false;
-    let startX = 0;
-    let startBallX = 0;
+const powerUpGeometry = new THREE.TetrahedronGeometry(0.5);
+const powerUpMaterial = new THREE.MeshStandardMaterial({ color: 0xffff00 });
+const powerUp = new THREE.Mesh(powerUpGeometry, powerUpMaterial);
+resetPowerUpPosition();
+scene.add(powerUp);
+function resetPowerUpPosition() {
+  powerUp.position.set((Math.random() - 0.5) * 8, 0.5, -50 - Math.random() * 50);
+}
+const diamondGeometry = new THREE.TetrahedronGeometry(0.5);
+const diamondMaterial = new THREE.MeshStandardMaterial({color: 0x00e8f5});
+const diamond = new THREE.Mesh(diamondGeometry, diamondMaterial);
+resetDiamondPosition()
+scene.add(diamond);
+function resetDiamondPosition() {
+  diamond.position.set((Math.random() - 0.5) * 8, 0.5, -50 -Math.random() * 50);
+}
+const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+scene.add(ambientLight);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+directionalLight.position.set(0, 10, 5);
+scene.add(directionalLight);
+camera.position.set(0, 5, 15);
+camera.lookAt(0, 5, 5);
+let playerVelocityX = 0;
+let gameSpeed = 0.1;
+let score = 0;
+let diamonds = localStorage.getItem('diamonds');
+diamonds = diamonds ? parseInt(diamonds) : 0;
+let powerUpActive = false;
+let powerUpTimer = 0;
+let isGameOver = false;
+let isDragging = false;
+let startX = 0;
+let startBallX = 0;
 function animateLines() {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -106,25 +107,6 @@ function animateLines() {
     }
   }
 }
-document.addEventListener('mousedown', (event) => {
-  isDragging = true;
-  startX = event.clientX;
-  startBallX = ball.position.x;
-});
-
-document.addEventListener('mousemove', (event) => {
-  if (isDragging) {
-    const deltaX = event.clientX - startX;
-    ball.position.x = startBallX + deltaX / 50;
-    if (ball.position.x < -4.8) ball.position.x = -4.8;
-    if (ball.position.x > 4.8) ball.position.x = 4.8;
-  }
-});
-
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-});
-
 document.addEventListener('touchstart', (event) => {
   isDragging = true;
   startX = event.touches[0].clientX;
@@ -143,9 +125,9 @@ document.addEventListener('touchmove', (event) => {
 document.addEventListener('touchend', () => {
   isDragging = false;
 });
-    const scoreDisplay = document.getElementById('score');
-    const gameOverScreen = document.getElementById('game-over');
-    const restartButton = document.getElementById('restart');
+const scoreDisplay = document.getElementById('score');
+const gameOverScreen = document.getElementById('game-over');
+const restartButton = document.getElementById('restart');
 
 restartButton.addEventListener('click', () => {
   isGameOver = false;
@@ -189,7 +171,6 @@ pauseResumeButton.addEventListener('click', () => {
 
 function animate() {
   if (isGameOver || isPaused) return;
-
   requestAnimationFrame(animate);
 
   gameSpeed += 0.0001;
@@ -219,12 +200,20 @@ function animate() {
       obstacle.velocityX = (Math.random() - 0.5) * 0.1;
       score++;
     }
+    if(
+      Math.abs(ball.position.x - diamond.position.x) < 0.9 &&
+      Math.abs(ball.position.z - diamond.position.z) < 0.9
+      ) {
+        diamonds += 5;
+        localStorage.setItem('diamonds', diamonds);
+        document.getElementById('diamond').innerText = diamonds;
+        resetDiamondPosition()
+      }
     if (
-      Math.abs(ball.position.x - obstacle.position.x) < 0.9 &&
-      Math.abs(ball.position.z - obstacle.position.z) < 0.9
+      Math.abs(ball.position.x - obstacle.position.x) < 1.3 &&
+      Math.abs(ball.position.z - obstacle.position.z) < 1.3
     ) {
       if (powerUpActive) {
-        // Hide obstacle and increase score
         obstacle.position.z = -95;
         obstacle.position.x = (Math.random() - 0.5) * 8;
         obstacle.velocityX = (Math.random() - 0.5) * 0.1;
@@ -245,7 +234,13 @@ function animate() {
     }
   }
   powerUp.position.z += gameSpeed;
-  if (powerUp.position.z > 5) resetPowerUpPosition();
+  diamond.position.z += gameSpeed;
+  if(diamond.position.z > 5) {
+    resetDiamondPosition()
+  }
+  if (powerUp.position.z > 5) {
+    resetPowerUpPosition();
+  }
   if (
     Math.abs(ball.position.x - powerUp.position.x) < 0.75 &&
     Math.abs(ball.position.z - powerUp.position.z) < 0.75
@@ -263,26 +258,26 @@ function animate() {
     }
   }
 
-  scoreDisplay.textContent = `${powerUpActive ? `Awooda Aan laga Adkaan: ${powerUpTimer}` : ""}`;
+  scoreDisplay.innerHTML = `${powerUpActive ? `(${powerUpTimer})` : ""}`;
   document.getElementById('center-score').innerText = score;
+  document.getElementById('diamond').innerText = '💎' + localStorage.getItem('diamonds');
   animateLines();
   renderer.render(scene, camera);
 }
 function endGame() {
   isGameOver = true;
+  powerUpActive = false;
   backgroundMusic.pause();
   backgroundMusic.currentTime = 0;
   gameOverSound.play();
-
-  // Retrieve the current high score from localStorage
   let highScore = localStorage.getItem('highScore');
   if (!highScore || score > highScore) {
     localStorage.setItem('highScore', score);
     highScore = score;
   }
-
   document.getElementById('hight-score').innerText = 'High Score: ' + highScore;
   document.getElementById('score').innerText = 'Score: ' + score;
+  document.getElementById('diamond').innerText = diamonds;
   document.getElementById('lastScore').innerText = 'Score: ' + score;
   document.getElementById('play').style.display = 'none';
   gameOverScreen.style.display = 'flex';
@@ -292,10 +287,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const highScore = localStorage.getItem('highScore');
   if (highScore) {
     document.getElementById('hight-score').innerText = 'High Score: ' + highScore;
-    document.getElementById('hight').innerText = 'Score-kaaga Sare waa: ' + highScore;
+    document.getElementById('hight').innerHTML = `Score-kaaga Sare waa: ${highScore}`;
   }
+  document.getElementById('diamond').innerText = '💎'+localStorage.getItem('diamonds');
   const soundButton = document.getElementById('sound');
-  const currentSound = localStorage.getItem('sound') || 'true'; // Default: sound on
+  const currentSound = localStorage.getItem('sound') || 'true';
   localStorage.setItem('sound', currentSound);
   updateSoundIcon(currentSound);
 
@@ -331,7 +327,6 @@ document.getElementById('start-button').addEventListener('click', function () {
   backgroundMusic.play();
   document.getElementById('start-game').style.display = 'none';
   document.getElementById('help').style.display = 'none';
-
   document.getElementById('play').style.display = 'block';
   newColor();
   animate();
