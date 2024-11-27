@@ -51,7 +51,7 @@ const obstacles = [];
 function createObstacle(zPosition) {
   const obstacleGeometry = new THREE.BoxGeometry(2, 2, 1);
   const obstaclesBg = new THREE.TextureLoader().load('bg1.jpeg');
-  const obstacleMaterial = new THREE.MeshStandardMaterial({ map: obstaclesBg, color: 0xf50000 });
+  const obstacleMaterial = new THREE.MeshStandardMaterial({ map: obstaclesBg });
   const obstacle = new THREE.Mesh(obstacleGeometry, obstacleMaterial);
   obstacle.position.set((Math.random() - 0.5) * 10, 0.3, zPosition);
   obstacle.velocityX = (Math.random() - 0.5) * 0.1;
