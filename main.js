@@ -4,8 +4,9 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 const backgroundGeometry = new THREE.PlaneGeometry(1000, 1000);
+const bgImg = new THREE.TextureLoader().load('sky.jpg');
 const backgroundMaterial = new THREE.MeshBasicMaterial({
-  color: 0x000000
+  map: bgImg
 });
 const backgroundPlane = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
 backgroundPlane.position.z = -500;
@@ -24,7 +25,7 @@ for (let z = -500; z < 0; z += 5) {
   scene.add(line);
   lines.push(line);
 }
-const playerTexture = new THREE.TextureLoader().load('bg2.jpg');
+const playerTexture = new THREE.TextureLoader().load('ball.png');
 const ballGeometry = new THREE.SphereGeometry(0.5, 32, 32);
 const ballMaterial = new THREE.MeshStandardMaterial({ map: playerTexture });
 const ball = new THREE.Mesh(ballGeometry, ballMaterial);
@@ -36,13 +37,9 @@ const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 ground.rotation.x = -Math.PI / 2;
 ground.position.y = 0;
 scene.add(ground);
-let color = 'e3ca00';
-function newColor() {
-  color = Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
-  wallMaterial.color.set(`#${color}`);
-}
+const wallImg = new THREE.TextureLoader().load('brick.png')
 const wallMaterial = new THREE.MeshStandardMaterial({
-  color: new THREE.Color(`#${color}`)
+  map: wallImg
 });
 const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 50, 700), wallMaterial);
 const rightWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 50, 700), wallMaterial);
@@ -141,7 +138,6 @@ restartButton.addEventListener('click', () => {
   resetPowerUpPosition();
   document.getElementById('play').style.display = 'block';
   gameOverScreen.style.display = 'none';
-  newColor();
   backgroundMusic.play();
   animate();
 });
@@ -160,10 +156,10 @@ pauseResumeButton.addEventListener('click', () => {
   isPaused = !isPaused;
 
   if (isPaused) {
-    pauseResumeButton.innerHTML = '<i class="bx bx-play"></i>';
+    pauseResumeButton.innerHTML = '<i class="fa fa-play"></i>';
     backgroundMusic.pause();
   } else {
-    pauseResumeButton.innerHTML = '<i class="bx bx-pause"></i>';
+    pauseResumeButton.innerHTML = '<i class="fa fa-pause"></i>';
     backgroundMusic.play();
     animate();
   }
@@ -204,7 +200,7 @@ function animate() {
       Math.abs(ball.position.x - diamond.position.x) < 0.9 &&
       Math.abs(ball.position.z - diamond.position.z) < 0.9
       ) {
-        diamonds += 5;
+        diamonds += 2.5;
         localStorage.setItem('diamonds', diamonds);
         document.getElementById('diamond').innerText = diamonds;
         resetDiamondPosition()
@@ -302,8 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSoundIcon(newSound);
     applyMute(newSound);
   });
-
-  // Apply initial sound setting
   applyMute(currentSound);
 });
 
@@ -328,7 +322,6 @@ document.getElementById('start-button').addEventListener('click', function () {
   document.getElementById('start-game').style.display = 'none';
   document.getElementById('help').style.display = 'none';
   document.getElementById('play').style.display = 'block';
-  newColor();
   animate();
 });
 document.getElementById('help').addEventListener('click', function () {

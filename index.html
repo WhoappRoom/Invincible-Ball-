@@ -35,8 +35,9 @@
       border-radius: 10px;
     }
     #score {
-      color: #00f532;
-      font-size: 20px;
+      text-shadow: 2px 2px 1px #348628, -2px 2px 1px #348628, 2px -2px 1px #348628, -2px -2px 1px #348628, 0px 2px 1px #348628, 0px -2px 1px #348628, 0px 4px 1px #1d4c16, 2px 4px 1px #1d4c16, -2px 4px 1px #1d4c16;
+      color: #fff;
+      font-size: 50px;
       font-weight: bold;
     }
     #top{
@@ -64,9 +65,9 @@
       cursor: pointer;
       border-radius: 4px;
       background: repeating-linear-gradient( 45deg, #54d440, #54d440 5px, #52cc3f 5px, #52cc3f 10px);
-    box-shadow: 0 6px 0 #348628, 0 8px 1px 1px rgba(0,0,0,.3), 0 10px 0 5px #2a6d20, 0 12px 0 5px #39822e, 0 15px 0 5px #1d4c16, 0 15px 1px 6px rgba(0,0,0,.3);
-    border-bottom: 3px solid rgba(40, 117, 29, 0.5);
-    text-shadow: 2px 2px 1px #348628, -2px 2px 1px #348628, 2px -2px 1px #348628, -2px -2px 1px #348628, 0px 2px 1px #348628, 0px -2px 1px #348628, 0px 4px 1px #1d4c16, 2px 4px 1px #1d4c16, -2px 4px 1px #1d4c16;
+      box-shadow: 0 6px 0 #348628, 0 8px 1px 1px rgba(0,0,0,.3), 0 10px 0 5px #2a6d20, 0 12px 0 5px #39822e, 0 15px 0 5px #1d4c16, 0 15px 1px 6px rgba(0,0,0,.3);
+      border-bottom: 3px solid rgba(40, 117, 29, 0.5);
+      text-shadow: 2px 2px 1px #348628, -2px 2px 1px #348628, 2px -2px 1px #348628, -2px -2px 1px #348628, 0px 2px 1px #348628, 0px -2px 1px #348628, 0px 4px 1px #1d4c16, 2px 4px 1px #1d4c16, -2px 4px 1px #1d4c16;
     }
     #start-game {
       position: absolute;
@@ -96,24 +97,22 @@
     #sound, #close, #help{
       display: flex;
     }
-    #play{
-      font-size: 40px;
-    }
     #center-score{
       position: fixed;
       top: 10%;
       color: #fff;
-      font-size: 50px;
+      text-shadow: 2px 2px 1px #348628, -2px 2px 1px #348628, 2px -2px 1px #348628, -2px -2px 1px #348628, 0px 2px 1px #348628, 0px -2px 1px #348628, 0px 4px 1px #1d4c16, 2px 4px 1px #1d4c16, -2px 4px 1px #1d4c16;
+      font-size: 60px;
       left: 50%;
     }
     .content {
       max-width: 600px;
       margin: 0 auto;
-      color: #fff;
-      background-color: #333;
       padding: 20px;
       display: none;
       left: 0;
+      color: #fff;
+      background-color: #333;
       right: 0;
       bottom: 0;
       top: 0;
@@ -132,7 +131,8 @@
     }
     #diamond{
       color: #fff;
-      font-size: 50px;
+      font-size: 40px;
+      text-shadow: 2px 2px 1px #348628, -2px 2px 1px #348628, 2px -2px 1px #348628, -2px -2px 1px #348628, 0px 2px 1px #348628, 0px -2px 1px #348628, 0px 4px 1px #1d4c16, 2px 4px 1px #1d4c16, -2px 4px 1px #1d4c16;
       font-weight: bolder;
     }
   </style>
@@ -146,7 +146,7 @@
       <div id="diamond">💎0</div>
     </div>
     <div style="display: flex; gap: 10px; align-items: center;">
-      <button id="play"><i class="bx bx-pause"></i></button>
+      <button id="play"><i class="fa fa-pause"></i></button>
       <button id="sound"><i class='bx bxs-volume-full'></i></button>
       <button id="help"><i class='bx bx-help-circle'></i></button>
     </div>
@@ -156,7 +156,7 @@
     <h3>Ciyaartu Way Dhamaatay!</h3>
     <h1 id="lastScore">0</h1>
     <h2 id="hight-score">0</h2>
-    <button id="restart">Ku Celi</button>
+    <button id="restart"><span>Ku Celi</span></button>
   </div>
   <div id="start-game">
     <h1>Kusoo Dhowow Invincible ball Soomaali!</h1>
